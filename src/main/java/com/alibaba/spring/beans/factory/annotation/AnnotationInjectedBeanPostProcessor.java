@@ -21,15 +21,11 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.PropertyValues;
-import org.springframework.beans.factory.BeanClassLoaderAware;
-import org.springframework.beans.factory.BeanCreationException;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.BeanFactoryAware;
-import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.*;
 import org.springframework.beans.factory.annotation.InjectionMetadata;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessorAdapter;
+import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessor;
 import org.springframework.beans.factory.support.MergedBeanDefinitionPostProcessor;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.context.EnvironmentAware;
@@ -46,13 +42,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -72,9 +62,8 @@ import static org.springframework.core.annotation.AnnotationUtils.getAnnotation;
  */
 @Deprecated
 @SuppressWarnings("unchecked")
-public abstract class AnnotationInjectedBeanPostProcessor<A extends Annotation> extends
-        InstantiationAwareBeanPostProcessorAdapter implements MergedBeanDefinitionPostProcessor, PriorityOrdered,
-        BeanFactoryAware, BeanClassLoaderAware, EnvironmentAware, DisposableBean {
+public abstract class AnnotationInjectedBeanPostProcessor<A extends Annotation> implements MergedBeanDefinitionPostProcessor, PriorityOrdered,
+        BeanFactoryAware, BeanClassLoaderAware, EnvironmentAware, DisposableBean, InstantiationAwareBeanPostProcessor {
 
     private final static int CACHE_SIZE = Integer.getInteger("", 32);
 
@@ -123,8 +112,8 @@ public abstract class AnnotationInjectedBeanPostProcessor<A extends Annotation> 
     }
 
     @Override
-    public PropertyValues postProcessPropertyValues(
-            PropertyValues pvs, PropertyDescriptor[] pds, Object bean, String beanName) throws BeanCreationException {
+    public PropertyValues postProcessProperties(
+            PropertyValues pvs, Object bean, String beanName) throws BeanCreationException {
 
         InjectionMetadata metadata = findInjectionMetadata(beanName, bean.getClass(), pvs);
         try {

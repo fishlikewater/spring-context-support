@@ -12,12 +12,12 @@
 
     <groupId>com.alibaba.spring</groupId>
     <artifactId>spring-context-support</artifactId>
-    <version>1.0.11</version>
+    <version>1.0.12</version>
 
     <properties>
-        <maven.compiler.source>1.6</maven.compiler.source>
-        <maven.compiler.target>1.6</maven.compiler.target>
-        <spring.framework.version>3.2.18.RELEASE</spring.framework.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <spring.framework.version>6.2.0</spring.framework.version>
     </properties>
 
     <scm>
@@ -74,7 +74,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.1.1</version>
+                        <version>3.7.0</version>
                         <executions>
                             <execution>
                                 <phase>package</phase>
@@ -150,6 +150,13 @@
             </properties>
         </profile>
 
+        <profile>
+            <id>spring-6.2</id>
+            <properties>
+                <spring.framework.version>6.2.0</spring.framework.version>
+            </properties>
+        </profile>
+
     </profiles>
 
     <build>
@@ -157,7 +164,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.12.1</version>
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
@@ -167,7 +174,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.3.0</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>

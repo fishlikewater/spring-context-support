@@ -5,20 +5,10 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.env.PropertyResolver;
 import org.springframework.util.ClassUtils;
 
-import java.lang.annotation.Annotation;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static java.lang.String.valueOf;
 import static java.util.Arrays.asList;
@@ -201,7 +191,7 @@ public abstract class AnnotationUtils {
     public static Map<String, Object> getAttributes(Map<String, Object> annotationAttributes,
                                                     PropertyResolver propertyResolver, String... ignoreAttributeNames) {
 
-        Set<String> ignoreAttributeNamesSet = new HashSet<String>(arrayToList(ignoreAttributeNames));
+        Set<String> ignoreAttributeNamesSet = new HashSet<>((Collection<? extends String>) arrayToList(ignoreAttributeNames));
 
         Map<String, Object> actualAttributes = new LinkedHashMap<String, Object>();
 
